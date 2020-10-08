@@ -1,0 +1,27 @@
+﻿body {
+}
+.field-validation-error{
+    color: red;
+    display: block;
+}
+.modal{
+    align-content: center;
+    position:center;
+    text-align:left;
+    padding:0;
+}
+.form-check{
+    margin-top:30px;
+}
+
+.schedule {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    display: none;
+    width: 50%;
+    height: 50%;
+    overflow: auto;
+    outline: 0;
+}

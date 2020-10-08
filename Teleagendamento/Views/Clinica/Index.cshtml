@@ -1,0 +1,112 @@
+﻿@model Teleagendamento.Models.Filtro.ClinicaFilter
+@{
+    ViewData["Title"] = "Index";
+}
+
+<head>
+
+
+
+</head>
+
+<form asp-action="Index" asp-controller="Clinica" method="post">
+    <main role="main">
+        <section class="container-fluid" style="margin-top: 50px">
+            <div class="row center">
+                <aside class="col-12 center">
+                    <h3 class="subtitle-doc">
+                        Clínicas
+                    </h3>
+                    <div class="card">
+                        <header class="card-header">
+                            <div class="form-row">
+                                <h4 class="card-title mt-2">Pesquisa</h4>
+                                <a id="expande-filtro" class="text-right col-11" href="#filtro-clinica" data-toggle="collapse" aria-expanded="@(ViewData["Area_Filtro_Expandida"] == null ? "false": "true")"
+                                   aria-controls="filtro-clinica" role="button">
+                                    <i class="text-dark fa @(ViewData["Area_Filtro_Expandida"] == null ? " fa-plus": " fa-minus")"></i>
+                                </a>
+                            </div>
+                        </header>
+                        <div class="collapse @(ViewData["Area_Filtro_Expandida"] == null ? string.Empty: " show")" id="filtro-clinica">
+                            <article class="card-body">
+                                <div class="form-row">
+                                    <div class="col-sm-6 form-group">
+                                        <label asp-for="Nome">Nome</label>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text"><i class="fa fa-hospital"></i></span>
+                                            </div>
+                                            <input type="text" asp-for="Nome" class="form-control" placeholder="">
+                                        </div>
+                                        <span asp-validation-for="Nome"></span>
+                                    </div>
+                                    <div class="col-sm-3 form-group">
+                                        <label asp-for="CNPJ">CNPJ</label>
+                                        <input class="form-control" asp-for="CNPJ" type="text" placeholder="99.999.999/9999-99">
+                                        <span asp-validation-for="CNPJ"></span>
+                                    </div>
+                                    <div class="form-group col-sm-2">
+                                        <label asp-for="Status">Status</label>
+                                        <select class="form-control" asp-items="Html.GetEnumSelectList<Teleagendamento.Models.Enum.TipoStatus>()"
+                                                asp-for="Status"></select>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div class="card-footer">
+                            <div class="col-sm-2 float-right">
+                                <button type="submit" id="pesquisar" class="btn btn-primary btn-block">Pesquisar</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </aside>
+            </div>
+        </section>
+
+
+        <section class="container-fluid" style="margin-top: 50px">
+            <div class="row center">
+                <div class="card col-12">
+                    <article class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Id</th>
+                                        <th scope="col">Nome</th>
+                                        <th scope="col">Telefone</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in (IEnumerable<Clinica>)TempData["Lista_Clinicas"])
+                                    {
+                                        <tr class="linha-conteudo">
+                                            <th scope="row">@item.Id</th>
+                                            <td>@item.Nome</td>
+                                            <td>@item.Telefone</td>
+                                            <td>@item.Status</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </article>
+                    <footer class="card-footer text-right">
+                        <div class="col-2 float-right">
+                            <button id="novo" formmethod="get" asp-action="Cadastro" asp-controller="Clinica" class="btn btn-success btn-block"> Novo </button>
+                        </div>
+                        <div class="col-2 float-right">
+                            <button type="button" id="editar" formmethod="get" class="btn btn-primary btn-block"> Editar </button>
+                        </div>
+                    </footer>
+                </div>
+            </div>
+        </section>
+    </main>
+</form>
+<div id="selecione-registro" style="display:none">
+    <p>Selecione um registro para editar!</p>
+</div>
+<script type="text/javascript" src="~/js/clinica/index-clinica-ui.js"></script>

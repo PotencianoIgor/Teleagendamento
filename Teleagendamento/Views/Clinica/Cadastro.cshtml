@@ -1,0 +1,138 @@
+﻿@model Teleagendamento.Models.Clinica
+@{
+    ViewData["Title"] = "CadastroClinica";
+}
+
+<form asp-action="Cadastro" asp-controller="Clinica" method="post">
+    <main role="main">
+
+        <section class="container-fluid" style="margin-top: 50px">
+            <div class="row center">
+                <aside class="col-sm-12 center">
+                    <h3 class="subtitle-doc">
+                        Clínica
+                    </h3>
+                    <div id="cadastro-clinica">
+                        <div class="card">
+                            <header class="card-header">
+                                <h4 class="card-title mt-2">Cadastro</h4>
+                            </header>
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="dados-pessoais-tab" data-toggle="tab" role="tab" href="#form-dados-principais">Dados da Clínica</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="endereco-tab" data-toggle="tab" role="tab" href="#form-endereco">Endereço</a>
+                                </li>
+                            </ul>
+                            <article class="card-body">
+                                <div class="tab-content">
+                                    @if (TempData["MSG_SUCESSO"] != null)
+                                    {
+                                        <p class="alert alert-success">@Html.Raw(TempData["MSG_SUCESSO"])</p>
+                                    }
+                                    else
+                                    {
+                                        if (TempData["MSG_ERRO"] != null)
+                                        {
+                                            <p class="alert alert-danger">@Html.Raw(TempData["MSG_ERRO"])</p>
+                                        }
+                                    }
+                                    <div id="form-dados-principais" method="post" class="tab-pane active" role="tabpanel" aria-labelledby="dados-pessoais-tab">
+                                        <input type="hidden" asp-for="Id" />
+                                        <div class="form-row">
+                                            <div class="col-sm-6 form-group">
+                                                <label asp-for="Nome">Nome</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-hospital"></i></span>
+                                                    </div>
+                                                    <input type="text" asp-for="Nome" class="form-control" placeholder="">
+                                                </div>
+                                                <span asp-validation-for="Nome"></span>
+                                            </div>
+                                            <div class="form-group col-sm-3">
+                                                <label asp-for="Telefone">Telefone</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                                    </div>
+                                                    <input type="text" asp-for="Telefone" class="form-control" placeholder="">
+                                                </div>
+                                                <span asp-validation-for="Telefone"></span>
+                                            </div>
+                                            <div class="col-sm-3 form-group">
+                                                <label asp-for="CNPJ">CNPJ</label>
+                                                <input class="form-control" asp-for="CNPJ" type="text" placeholder="99.999.999/9999-99">
+                                                <span asp-validation-for="CNPJ"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-2">
+                                                <label asp-for="VagasDiarias">Nº de Vagas Diárias</label>
+                                                <input class="form-control" asp-for="VagasDiarias" type="number" placeholder="">
+                                                <span asp-validation-for="VagasDiarias"></span>
+                                            </div>
+                                            <div class="form-group col-sm-2">
+                                                <label asp-for="Status">Status</label>
+                                                <select class="form-control" asp-items="Html.GetEnumSelectList<Teleagendamento.Models.Enum.TipoStatus>()
+                                                              .Where(x => !x.Value.Equals(0.ToString()))"
+                                                        asp-for="Status"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="form-endereco" class="tab-pane" role="tabpanel" aria-labelledby="endereco-tab">
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-3">
+                                                <label asp-for="Endereco.CEP">CEP</label>
+                                                <input class="form-control" type="text" asp-for="Endereco.CEP" placeholder="" />
+                                                <span asp-validation-for="Endereco.CEP"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-6">
+                                                <label asp-for="Endereco.Bairro">Bairro</label>
+                                                <input class="form-control" type="text" asp-for="Endereco.Bairro" />
+                                                <span asp-validation-for="Endereco.Bairro"></span>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label asp-for="Endereco.Logradouro">Logradouro</label>
+                                                <input class="form-control" type="text" asp-for="Endereco.Logradouro" />
+                                                <span asp-validation-for="Endereco.Logradouro"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-sm-6">
+                                                <label asp-for="Endereco.Estado">Estado</label>
+                                                <select class="form-control" asp-items="Html.GetEnumSelectList<Teleagendamento.Models.Enum.TipoEstado>()" asp-for="Endereco.Estado"></select>
+                                                <span asp-validation-for="Endereco.Estado"></span>
+                                            </div>
+                                            <div class="form-group col-sm-6">
+                                                <label asp-for="Endereco.Cidade">Cidade</label>
+                                                <input class="form-control" type="search" asp-for="Endereco.Cidade" />
+                                                <span asp-validation-for="Endereco.Cidade"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article> <!-- card-body end .// -->
+                            <footer class="card-footer text-right">
+                                <div class="col-2 float-right">
+                                    <button id="cancelar" formmethod="get" asp-action="Index" asp-controller="Clinica" class="btn btn-danger btn-block"> Cancelar </button>
+                                </div>
+                                <div class="col-2 float-right">
+                                    <button type="submit" id="salvar" class="btn btn-primary btn-block"> Salvar </button>
+                                </div>
+                            </footer>
+
+                        </div>
+                    </div> <!-- card.// -->
+                </aside>
+            </div>
+        </section>
+    </main>
+</form>
+<script type="text/javascript" src="~/resources/lib/jQuery-Mask-Plugin-master/jquery.mask.min.js"></script>
+<script type="text/javascript" src="~/resources/lib/jQuery-datepicker/jquery-ui.min.js"></script>
+<link type="text/css" rel="stylesheet" href="~/resources/lib/jQuery-datepicker/jquery-ui.min.css" />
+<script type="text/javascript" src="~/js/clinica/cadastro-clinica-ui.js"></script>
